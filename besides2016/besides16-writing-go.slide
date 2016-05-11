@@ -1,0 +1,340 @@
+Sécurité de Go
+14 Mai 2016
+
+K.I.A.Derouiche
+Algerian Security Group
+kamel.derouiche@gmail.com
+https://github.com/lpabon/go-slides
+@kiaderouiche
+
+* About me
+
+K.I.A.Derouiche, Principal Software Engineer
+
+.image fosdem-writing-go-rest/me.jpg _ 800
+
+* Au début
+
+.image  images/gopher-2.jpg
+
+* Non au début il y avait
+
+Google et 3 ingénieurs:
+
+-  Robert Griesemer
+-  Rob Pike
+-  Ken Thompson
+
+Aprés c'était ça:
+
+# .images
+
+- Lancement publique le 8 janvier 2010:
+- Un langage open source (licence BSD)n logiciel libre
+.link http://golang.org golang.org
+
+* Positionnement de Go
+
+Il existe des zillions de langages de programmation.
+
+Ou l'histoire du poisson qui nage dans les haut mer!.
+
+- C#.Net pour Microsoft et windows.
+- Java pour 3 billion d'application !!!.
+- Certaines familles sont très encombrées(Haskell, Erlang, famille ML. . . )
+- Go est sur le créneau des langages <<systèmes et réseaux>>, où il n'y a guère que C et C++ (et Erlang ?). La précédente tentative sérieuse de détrôner C était D (peu de succès)
+
+* Go c'est quoi?
+
+- Pas de fonctionnalités compliqués
+- Language simple, rapide à apprendre
+- Adapté à l'industrie/productive
+- Rapidité de compilation
+- Conçu pour gérer des datacenters et le cloud
+- Consomme peu de ressources
+- Exploite au mieux les CPU (coeurs multiples)
+- Peu présent dans le GUI (desavantage)
+- Garbage collector
+- Integration de json, xml, etc...
+
+* Go millestone
+
+Go 2 ...(Februray 2018)
+Go 1.9 ...(Aout 2017)
+Go 1.8 ...(February 2017)
+Go 1.7 ... (Aout 2016)
+Go 1.6 ... (February 2016)
+Go 1.5 ... (Aout 2015)
+Go 1.4 ... (December 2014)
+Go 1.3 ... (June 2014)
+Go 1.2 ... (December 2013)
+Go 1.1 ... (May 2013)
+Go 1 ... (March 2012)
+ 
+* Autour de Go
+
+Google, Microsoft, Kubernetes, YouTube, Airbrake,  Acquia, Docker, Bitbucket,
+Appbase,BBC Worldwide, Awake Networks, Canonical, Carbon Games, Datascale,
+DoubleDutch, eBay, Economist, Grovo, GitHub, Imagefly,  Iron.io,  Kingsoft,
+Maldive,  New York Times,Outdoorsy, Qurami,  Heroku, Tamber, Square, Twitter,
+Twitch, Rive, BigPanda, Yodas, Avito, CloudFlare, Kiliaro, Facebook, Dropbox,
+SoundCloud, Instela, MongoDB, Netflix, Newspaper, Mozilla Services, VMWare,
+Weave, Zumba, eurka....more
+
+.link https://github.com/golang/go/wiki/GoUsers
+
+* Hello World!
+
+.play code/entropy.go
+
+* Quelques surprises
+
+- Commentaire à la C ou bien C++/Java; points virgules
+- Déclaration de package:
+  import "pkg" or import("pkg") or import("pkg1",..."pkgn")
+- Declarer ces variables:
+
+  var name string = "besides2016"
+  name := "besides2016"
+
+- Inférence de types:
+  v := 42 // change me!
+  conn, error := net.Dial("tcp", "", "whois.nic.dz:193");
+
+- Pas de boucle While:
+for(){
+ ...
+}
+
+* Fonction variadique
+
+.play code/varnumpar.go
+
+* Slice et tableau
+.code code/slice-tab.go
+* Maps
+.play code/maps.go
+
+* Never Never programmation en orienter objet
+
+- Pas de surcharge de fonctions
+- Pas de classes
+- Pas d'Heritages
+- Pas de constructeur(__init__)
+- Pas de méthodes générique
+
+C'est voulu!
+
+* Go peut faire de l'objet
+
+- L'hértage devient de la composition
+-Mais on peut attacher une fonction à un type.
+// Définition
+func (t *Twitter) FriendsTimeline() (string, os.Error) {
+...
+// Utilisation
+tw := twitter.NewTwitter(*username, *password);
+timeline, error := tw.FriendsTimeline();
+os.Stdout.WriteString(timeline);
+
+structures avec méthodes(ça ressemble aux classes)
+
+* Interfaces
+
+- Un type n'a pas besoin de déclarer  explicitement qu'il réalise une interface
+- Un type peut satisfaire plusieurs interfaces
+- Une interface peut être définit dans un autre package que les types qui la satisfont
+- Très utilisé dans les bibliothèques
+
+.code code/bou-interface.go
+
+* Interfaces en action
+
+* Cross Compilation
+
+C'est la capacité à produire sous un environnement Y, un artefact pour l'environnement Z. Vous développez sous Linux, vous désirez produire un artefact pour Mac, et Windows 32/64bits.
+
+Deux possibilités :
+
+- 100% Go: Le code est généré un exécutable statique.
+- Le code utilise des librairies externes écrites dans un autre langage (binding)
+on appel au compilateur cgo.
+
+*  Web: la base
+
+# ecrire du code!
+
+* Frameworks web
+
+#.links http://beego.me/
+#.links https://revel.github.io/
+#.links http://www.gorillatoolkit.org/ (middleware)
+
+* Pas d'exceptions
+
+- Le retour de codes d'erreur remplace les exceptions
+- Lorsqu'une erreur grave se produit, il est possible d'utiliser l'énoncé panic
+(pour les erreurs imprévues et des violations de d'assertions)
+- En cas de panique la fonction s'interrompt immédiatement, les fonctions différées
+sont exécutées et retrourne à la fonction appelante qui déclenche à son tour
+une nouvelle panique
+
+* Démarrer une panique
+
+.play code/panic-example.go 
+
+* Recouvrer aprés panique
+
+- L'énoncé recover permet de regagner le controle aprés une panique
+- En l'absence de panique, le reconver retourne simplement nil
+
+.play code/recover-example.go
+
+* Compilation/Documentation:
+Compilation:
+
+$ go run prog.go
+$ go build prog.go
+$ gofmt -w -s prog.go
+
+Documentation:
+
+$ godoc log Fatal
+$ godoc -src cmd/go
+$ godoc -q math.Sin
+
+Installation:
+
+$ go get -u -v github.com/go-martini/martini
+
+*  Goroutines
+La programmation concurrente simple avec gestion des messages via des canaux :
+une façon légère et rapide de mettre en parallèle les traitements pour accélérer
+les programmes. Cette fonctionnalité seule a attiré plus d’un programmeur à ce
+langage, car elle montre comment on peut résoudre élégamment des problèmes
+complexes avec Go.
+
+.image images/datacenter.jpg
+
+* Goroutines comment ça marche?
+
+.play code/concuren.go
+
+* Securité
+
+* Les outils pour la sécurité
+
+Génération de clés, chiffrement, déchiffrement, Nombre aléatoire, etc...
+import "crypto",
+
+.link https://godoc.org/golang.org/x/crypto  crypto: golang.org/x/crypto 
+
+* Justifier chaque ligne du code
+
+usage du package math
+
+.play code/min-secu.go
+
+* Pointeurs
+
+.play  code/pointer-succ.go
+
+* Pas d'arithmétique de  pointeurs
+
+- Pas d'algèbre de pointeurs
+- Allocation transparente, pas besoin de le faire
+
+.play code/pointer-calc.go
+
+* 01 11 001 111 101
+
+.image images/mindblown.gif
+
+* Dépassemnt de capacité de la pile
+
+stack overflow
+
+.play code/stakoverflow.go
+
+Le runtime attrape l'erreur et de panique.
+
+* Trop de mémoire sur le tas
+
+out of memory
+
+.play code/memlist.go
+
+Encore une fois le runtime attrape l'erreur et de panique.
+
+* Stealing resources by sleeping
+
+.play code/stealresour.go
+
+A sleeping program still consumes resources.
+Easy way of having a Denial of Service attack.
+
+* Accès à des choses que vous ne devriez pas
+
+* L'accès permissive au système de fichiers
+
+Le code utilisateur ne doit pas être en mesure de modifier le système de fichiers.
+- Installation backdoors
+
+.play code/noacessfile.go
+
+* Networking access
+
+.play code/network-access.go
+
+* Native Client
+
+Initialement conçu pour exécuter du code natif dans Chrome en toute sécurité.
+NaCl restrictions définies sur les binaires en cours d'exécution.
+Le code est exécuté dans un sandbox isolé à partir du système d'exploitation
+sous-jacent.
+- Pas d'accées au fichiers
+- Pas d'accès réseau
+
+.image images/nacl.png 350 700
+
+* Isoler l'exécution des processus avec NaCl
+
+Nous utilisons NaCl pour:
+
+- limiter le  temps CPU 
+- limiter la mémoire
+- l'isolaion de système de fichier
+- l'isolation pour le réseau
+
+Process ne peut écrire que stdout / stderr. 
+
+* Restricatioon du temp utilisateur
+
+.code code/time-user.go
+
+* Fonctionalité limité
+
+* Faking systéme de fichier
+
+Le package syscall est le seul lien entre le code utilisateur et le noyau
+du système d'exploitation.
+
+.play code/fake-fsys.go
+
+* Intermission: interblocage
+
+.play code/deadlock.go
+
+Une propriété commune: tous sont endormis goroutines
+
+* Q/A
+
+.image images/maxresdefault.jpg 500 700
+
+
+
+## Reference ##
+# https://talks.golang.org/2014/research.slide#6
+# https://talks.golang.org/2012/tutorial.slide#29
+#https://talks.golang.org/2015/simplicity-is-complicated.slide#13
+#http://www.pythonsecurity.org/
