@@ -47,16 +47,17 @@ Ou l'histoire du poisson qui nage dans les haut mer!.
 
 * Go c'est quoi?
 
-- Pas de fonctionnalités compliqués
-- Language simple, rapide à apprendre
-- Adapté à l'industrie/productive
-- Rapidité de compilation
-- Conçu pour gérer des datacenters et le cloud
-- Consomme peu de ressources
-- Exploite au mieux les CPU (coeurs multiples)
-- Peu présent dans le GUI (desavantage)
-- Garbage collector
-- Integration de json, xml, etc...
+- Pas de fonctionnalités compliqués (++?)
+- Language simple, rapide à apprendre coté développement (++)
+- Adapté à l'industrie/productive (+++)
+- Rapidité de compilation (+++)
+- Conçu pour gérer des datacenters et le cloud (+++)
+- Consomme peu de ressources (+++)
+- Exploite au mieux les CPU (coeurs multiples) (+++)
+- Peu présent dans le GUI (- - -)
+- Garbage collector (+++)
+- Integration de json, xml, etc...(++!)
+- Beaucoup plus simple pour l'apprentissage(BONUS)
 
 * Go millestone
 
