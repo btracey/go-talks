@@ -1,10 +1,11 @@
-Sécurité de Go
+Thinking sécurité en Go
 14 Mai 2016
 
 K.I.A.Derouiche
+NetBSD Project
 Algerian Security Group
 kamel.derouiche@gmail.com
-https://github.com/lpabon/go-slides
+https://github.com/kiaderouiche/go-slides
 @kiaderouiche
 
 * About me
@@ -166,9 +167,9 @@ on appel au compilateur cgo.
 
 * Frameworks web
 
-#.links http://beego.me/
-#.links https://revel.github.io/
-#.links http://www.gorillatoolkit.org/ (middleware)
+.link http://beego.me/
+.link https://revel.github.io/
+.link http://www.gorillatoolkit.org/ (middleware)
 
 * Pas d'exceptions
 
@@ -178,17 +179,6 @@ on appel au compilateur cgo.
 - En cas de panique la fonction s'interrompt immédiatement, les fonctions différées
 sont exécutées et retrourne à la fonction appelante qui déclenche à son tour
 une nouvelle panique
-
-* Démarrer une panique
-
-.play code/panic-example.go 
-
-* Recouvrer aprés panique
-
-- L'énoncé recover permet de regagner le controle aprés une panique
-- En l'absence de panique, le reconver retourne simplement nil
-
-.play code/recover-example.go
 
 * Compilation/Documentation:
 Compilation:
@@ -250,6 +240,18 @@ usage du package math
 
 .image images/mindblown.gif
 
+* Démarrer une panique
+
+.play code/panic-example.go 
+
+* Recouvrer aprés panique
+
+- L'énoncé recover permet de regagner le controle aprés une panique
+- En l'absence de panique, le reconver retourne simplement nil
+
+.play code/recover-example.go
+
+
 * Dépassemnt de capacité de la pile
 
 stack overflow
@@ -266,12 +268,12 @@ out of memory
 
 Encore une fois le runtime attrape l'erreur et de panique.
 
-* Stealing resources by sleeping
+* Consommation de ressources
 
 .play code/stealresour.go
 
-A sleeping program still consumes resources.
-Easy way of having a Denial of Service attack.
+Programme en mode sleep consomme des ressources.
+Un moyen facile d'avoir un déni de service.
 
 * Accès à des choses que vous ne devriez pas
 
@@ -304,11 +306,11 @@ Nous utilisons NaCl pour:
 - limiter le  temps CPU 
 - limiter la mémoire
 - l'isolaion de système de fichier
-- l'isolation pour le réseau
+- l'isolation des applications réseau
 
-Process ne peut écrire que stdout / stderr. 
+Processus ne peut écrire que stdout/stderr. 
 
-* Restricatioon du temp utilisateur
+* Restrication du temp utilisateur
 
 .code code/time-user.go
 
@@ -321,11 +323,17 @@ du système d'exploitation.
 
 .play code/fake-fsys.go
 
-* Intermission: interblocage
+* Interblocage
 
 .play code/deadlock.go
 
 Une propriété commune: tous sont endormis goroutines
+
+* New behavior
+
+A goroutine G calls time.Sleep:
+
+- 
 
 * Q/A
 

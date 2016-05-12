@@ -15,7 +15,7 @@ func main(){
 		}
 	}
 
-	if err := json.NewDecoder(res.Body).Decode(&w); err != nil{
+	if err = json.NewDecoder(res.Body).Decode(&w) {
 		log.Fatal(err)
 	}
 	fmt.Printf("No need to rush outside, we have %v.", weather[0].Desc);
