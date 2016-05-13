@@ -8,12 +8,6 @@ kamel.derouiche@gmail.com
 https://github.com/kiaderouiche/go-slides
 @kiaderouiche
 
-* About me
-
-K.I.A.Derouiche, Principal Software Engineer
-
-.image fosdem-writing-go-rest/me.jpg _ 800
-
 * Au début
 
 .image  images/gopher-2.jpg
@@ -114,6 +108,9 @@ for(){
 
 * Slice et tableau
 .code code/slice-tab.go
+
+Slice trés utilisées dans la programmation Go.
+
 * Maps
 .play code/maps.go
 
