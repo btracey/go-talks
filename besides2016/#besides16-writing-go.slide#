@@ -133,7 +133,7 @@ C'est voulu!
 -Mais on peut attacher une fonction à un type.
 // Définition
 func (t *Twitter) FriendsTimeline() (string, os.Error) {
-
+...
 // Utilisation
 tw := twitter.NewTwitter(*username, *password);
 timeline, error := tw.FriendsTimeline();
@@ -177,7 +177,7 @@ on appel au compilateur cgo.
 - Le retour de codes d'erreur remplace les exceptions
 - Lorsqu'une erreur grave se produit, il est possible d'utiliser l'énoncé panic
 (pour les erreurs imprévues et des violations de d'assertions)
-- En cas de panique la fonction s'interrompt immédiatement, les fonctions différées
+- En cas de panique la fonnction s'interrompt immédiatement, les fonctions différées
 sont exécutées et retrourne à la fonction appelante qui déclenche à son tour
 une nouvelle panique
 
