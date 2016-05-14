@@ -16,56 +16,58 @@ https://github.com/kiaderouiche/go-slides
 
 Google et 3 ingénieurs:
 
--  Robert Griesemer
--  Rob Pike
--  Ken Thompson
+-  Robert Griesemer (V8, Java Hotspot, GFS)
+-  Rob Pike (Plan 9, UTF-8)
+-  Ken Thompson (B, Unix, ed, UTF-8)
 
 Aprés c'était ça:
 
 # .images
 
-- Lancement publique le 8 janvier 2010:
-- Un langage open source (licence BSD)n logiciel libre
+- Conçu pour la construction de systèmes de production de Google.
+- Lancement publique le 8 janvier 2010
+- Un langage open source (licence BSD)
 .link http://golang.org golang.org
 
 * Positionnement de Go
 
 Il existe des zillions de langages de programmation.
 
-Ou l'histoire du poisson qui nage dans les haut mer!.
+Ou l'histoire du poisson qui nage dans les hauts mer!.
 
-- C#.Net pour Microsoft et windows.
+- C#.Net pour Microsoft, windows et Imagine Cup!!!.
 - Java pour 3 billion d'application !!!.
 - Certaines familles sont très encombrées(Haskell, Erlang, famille ML. . . )
 - Go est sur le créneau des langages <<systèmes et réseaux>>, où il n'y a guère que C et C++ (et Erlang ?). La précédente tentative sérieuse de détrôner C était D (peu de succès)
 
+*  Positionnement de Go (suite)
+Le Go vise à corriger cette situation en assemblant un bouquet des meilleures caractéristiques de plusieurs langages existants
+
 * Go c'est quoi?
 
 - Pas de fonctionnalités compliqués (++?)
-- Language simple, rapide à apprendre coté développement (++)
-- Adapté à l'industrie/productive (+++)
-- Rapidité de compilation (+++)
+- sûreté (+++)
+- Rapide à apprendre(développeur, débutant) (++?)
+- Adapté à l'industrie/productive (***)
+- Scalabilité et compilation rapide (+++)
 - Conçu pour gérer des datacenters et le cloud (+++)
-- Consomme peu de ressources (+++)
-- Exploite au mieux les CPU (coeurs multiples) (+++)
-- Peu présent dans le GUI (- - -)
-- Garbage collector (+++)
-- Integration de json, xml, etc...(++!)
-- Beaucoup plus simple pour l'apprentissage(BONUS)
+- Exploite au mieux les CPUs (coeurs multiples) (+++)
+- Peu présent dans le GUI ()
+- Garbage collector (++?), json, xml, etc...(!)
 
 * Go millestone
 
-Go 2 ...(Februray 2018)
+Go 2 ...(Fevrier 2018)
 Go 1.9 ...(Aout 2017)
-Go 1.8 ...(February 2017)
+Go 1.8 ...(Fevrier 2017)
 Go 1.7 ... (Aout 2016)
-Go 1.6 ... (February 2016)
+Go 1.6 ... (Fevrier 2016)
 Go 1.5 ... (Aout 2015)
-Go 1.4 ... (December 2014)
-Go 1.3 ... (June 2014)
-Go 1.2 ... (December 2013)
-Go 1.1 ... (May 2013)
-Go 1 ... (March 2012)
+Go 1.4 ... (Decembre 2014)
+Go 1.3 ... (Juin 2014)
+Go 1.2 ... (Decembre 2013)
+Go 1.1 ... (Mai 2013)
+Go 1 ... (Mars 2012) (stable)
  
 * Autour de Go
 
@@ -83,6 +85,19 @@ Weave, Zumba, eurka....more
 
 .play code/entropy.go
 
+* Type de variables
+
+numériques:
+-  entiers non-signés: byte/uint8, uint16, uint32, uint64 et uint
+-  entiers signés: int8, int16, int32/rune, int64 et int
+- flottants: float32, float64
+- complexes: complex64, complex128
+
+- chaines de caractères: string
+- booléens: bool
+-   constantes
+-   blank: "_"
+    
 * Quelques surprises
 
 - Commentaire à la C ou bien C++/Java; points virgules
@@ -98,18 +113,27 @@ Weave, Zumba, eurka....more
   conn, error := net.Dial("tcp", "", "whois.nic.dz:193");
 
 - Pas de boucle While:
-for(){
- ...
-}
+for(){ }
+
+- Il n'y a pas de delete  correspondant (garbage collector)
+
+* Structures de contrôle
+- Forme habituelle
+.code code/contr1.go
+
+- Avec énoncé d'initialisation
+.code code/contr2.go
 
 * Fonction variadique
 
 .play code/varnumpar.go
 
-* Slice et tableau
+* Tableau et slice
+- Une slice  est une référence sur une portion d'un tableau
+- sArray := make([ ]int, 10, 10)
 .code code/slice-tab.go
 
-Slice trés utilisées dans la programmation Go.
+Slice trés utilisées en Go.
 
 * Maps
 .play code/maps.go
@@ -126,10 +150,13 @@ C'est voulu!
 
 * Go peut faire de l'objet
 
+- Langage orienté objet, mais sans hiérarchie de classes:
+ - méthodes + interfaces
+
 - L'hértage devient de la composition
--Mais on peut attacher une fonction à un type.
+-Mais on peut attacher une méthode à un type.
 // Définition
-func (t *Twitter) FriendsTimeline() (string, os.Error) {
+func (t *Twitter) FriendsTimeline() (string, os.Error) {}
 
 // Utilisation
 tw := twitter.NewTwitter(*username, *password);
@@ -140,14 +167,20 @@ structures avec méthodes(ça ressemble aux classes)
 
 * Interfaces
 
+- Définition: 
+ une interface est un ensemble de méthodes
+ 
 - Un type n'a pas besoin de déclarer  explicitement qu'il réalise une interface
+    Norm() float64
 - Un type peut satisfaire plusieurs interfaces
-- Une interface peut être définit dans un autre package que les types qui la satisfont
+- Elle sont pures et abstraites
+- Go sépare très clairement les interfaces des implantations
+- Une interface est un type; une variable de ce type  possède une valeur pour laquelle l'ensemble des méthodes de l'interface sont implantées
 - Très utilisé dans les bibliothèques
 
-.code code/bou-interface.go
-
 * Interfaces en action
+
+.code code/bou-interface.go
 
 * Cross Compilation
 
@@ -159,15 +192,6 @@ Deux possibilités :
 - Le code utilise des librairies externes écrites dans un autre langage (binding)
 on appel au compilateur cgo.
 
-*  Web: la base
-
-# ecrire du code!
-
-* Frameworks web
-
-.link http://beego.me/
-.link https://revel.github.io/
-.link http://www.gorillatoolkit.org/ (middleware)
 
 * Pas d'exceptions
 
@@ -195,27 +219,84 @@ Installation:
 
 $ go get -u -v github.com/go-martini/martini
 
-*  Goroutines
-La programmation concurrente simple avec gestion des messages via des canaux :
-une façon légère et rapide de mettre en parallèle les traitements pour accélérer
-les programmes. Cette fonctionnalité seule a attiré plus d’un programmeur à ce
-langage, car elle montre comment on peut résoudre élégamment des problèmes
-complexes avec Go.
+*  Outils IDE
 
-.image images/datacenter.jpg
+- atom (github)
+- sublimetext(2, 3)
+- vim
+- emacs
+
+* La concurrence
+
+Quelles sont les exigences matérielles de la concurrence?,  Qu'est-ce que la concurrence?, d'où vient l'idée?, À quoi ça sert?, comment puis-je l'utiliser?.
+
+.image images/datacenter.jpg  400 900
+
+* C'est quoi la concurrence?
+
+La Concurrence est une façon de structurer un logiciel, en particulier comme un moyen d'écrire un code propre qui interagit bien avec le monde réel.
+
+Concurrency is not parallelism.
+
+* Goroutines
+
+Une goroutine est un thread contrôle au sein du programme , posséde ça propres variables locales et pile.
+
+- Elle à sa propre pile d'appel, sa taille est dynamique.
+- Les goroutines sont peu gourmandes en ressources
+- On peut en créer plusieurs dizaines de milliers sans problème.
+- on peut appeler la fonction runtime.GOMAXPROCS(n) pour fixer le nombre maximum
+de fils d'exécution
+- Chaque goroutine possède sa propre pile pour les variables locales
+- Il pourrait y avoir un seul thread dans un programme avec des milliers de goroutines.
+- Il n'est pas un thread.
 
 * Goroutines comment ça marche?
 
-.play code/concuren.go
+.play code/begin-routine.go
 
-* Securité
+* Goroutines comment ça marche?(suite)
+
+.play code/begin-goroutine.go
+
+* Channels
+
+.play code/channels.go
+
+* Channels et select
+
+.play code/channels-select.go
+
+* Web
+
+* Notre premier serveur HTTP en Go
+
+.play code/web-test.go
+
+* Martini exemple:
+.play code/martini-test.go
+
+* Frameworks web
+
+.link https://github.com/go-martini/martini
+.link http://beego.me/
+.link https://revel.github.io/
+.link http://www.gorillatoolkit.org/
+
+ORMs
+
+- GORM: github.com/jinzhu/gorm
+- GORP: github.com/coopernurse/gorp
+- upper.io/db
+
+* Sécurité
 
 * Les outils pour la sécurité
 
 Génération de clés, chiffrement, déchiffrement, Nombre aléatoire, etc...
-import "crypto",
+import "crypto",  "crypto/rand", etc...
 
-.link https://godoc.org/golang.org/x/crypto  crypto: golang.org/x/crypto 
+.link https://godoc.org/golang.org/x/crypto  crypto: golang.org/x/crypto
 
 * Justifier chaque ligne du code
 
@@ -236,7 +317,7 @@ usage du package math
 
 * 01 11 001 111 101
 
-.image images/mindblown.gif
+.image images/mindblown.gif 600 600
 
 * Démarrer une panique
 
@@ -249,16 +330,15 @@ usage du package math
 
 .play code/recover-example.go
 
-
-* Dépassemnt de capacité de la pile
+* Dépassement de capacité
 
 stack overflow
 
 .play code/stakoverflow.go
 
-Le runtime attrape l'erreur et de panique.
+Le runtime attrape l'erreur et la panique.
 
-* Trop de mémoire sur le tas
+* Trop de mémoire
 
 out of memory
 
@@ -273,7 +353,7 @@ Encore une fois le runtime attrape l'erreur et de panique.
 Programme en mode sleep consomme des ressources.
 Un moyen facile d'avoir un déni de service.
 
-* Accès à des choses que vous ne devriez pas
+* Accès interdit
 
 * L'accès permissive au système de fichiers
 
@@ -281,10 +361,6 @@ Le code utilisateur ne doit pas être en mesure de modifier le système de fichi
 - Installation backdoors
 
 .play code/noacessfile.go
-
-* Networking access
-
-.play code/network-access.go
 
 * Native Client
 
@@ -308,13 +384,13 @@ Nous utilisons NaCl pour:
 
 Processus ne peut écrire que stdout/stderr. 
 
-* Restrication du temp utilisateur
+* Restriction du temp utilisateur
 
 .code code/time-user.go
 
 * Fonctionalité limité
 
-* Faking systéme de fichier
+* Gestion du systéme de fichier
 
 Le package syscall est le seul lien entre le code utilisateur et le noyau
 du système d'exploitation.
@@ -325,19 +401,22 @@ du système d'exploitation.
 
 .play code/deadlock.go
 
-Une propriété commune: tous sont endormis goroutines
+Une propriété commune: tous les goroutines endormis 
 
-* New behavior
 
-A goroutine G calls time.Sleep:
+ 
 
-- 
+* Référence
+
+Pour aller plus loin:
+
+.link talks.golang.org
+.link  Go playground: blog.golang.org/playground
+.link The Go tour: tour.golang.org
 
 * Q/A
 
 .image images/maxresdefault.jpg 500 700
-
-
 
 ## Reference ##
 # https://talks.golang.org/2014/research.slide#6

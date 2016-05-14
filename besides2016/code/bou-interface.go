@@ -1,12 +1,18 @@
 package main
 
-/* Un type qui a une fonction d'écriture. Cela peut être un fichier,
-une prise réseau, une chaîne de caractères, etc */
-type Writer interface {
-	Write(p []byte) (n int, err os.Error)
+type Point struct { x, y float64 }
+
+func (p *Point) Norm() float64 { 
+	return math.Sqrt(p.x*p.x + p.y*p.y)
 }
 
-/* Et ensuite : */
-func NewBufferedWriter(wr io.Writer) *BufferedWriter
+/* Un type qui a une fonction d'écriture. Cela peut être un fichier,
+une prise réseau, une chaîne de caractères, etc */
 
-/* Permet de ``bufferiser'' tout io.Writer */
+type NormInterface interface {
+	Norm() float64
+}
+
+func computeNorm(x *NormInterface) float64 {
+	return x.Norm()
+}
