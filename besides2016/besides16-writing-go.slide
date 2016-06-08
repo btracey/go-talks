@@ -170,10 +170,10 @@ structures avec méthodes(ça ressemble aux classes)
 - Définition: 
  une interface est un ensemble de méthodes
  
-- Un type n'a pas besoin de déclarer  explicitement qu'il réalise une interface
+- Un type n'a pas besoin de déclarer explicitement qu'il réalise une interface
     Norm() float64
 - Un type peut satisfaire plusieurs interfaces
-- Elle sont pures et abstraites
+- Elle sont pures et abstraites (au sens de Java)
 - Go sépare très clairement les interfaces des implantations
 - Une interface est un type; une variable de ce type  possède une valeur pour laquelle l'ensemble des méthodes de l'interface sont implantées
 - Très utilisé dans les bibliothèques
