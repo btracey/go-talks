@@ -20,7 +20,7 @@ Google et 3 ingénieurs:
 -  Rob Pike (Plan 9, UTF-8)
 -  Ken Thompson (B, Unix, ed, UTF-8)
 
-Aprés c'était ça:
+Après c'était ça:
 
 # .images
 
@@ -57,7 +57,7 @@ Le Go vise à corriger cette situation en assemblant un bouquet des meilleures c
 
 * Go millestone
 
-Go 2 ...(Fevrier 2018)
+Go 1.10 ...(Fevrier 2018)
 Go 1.9 ...(Aout 2017)
 Go 1.8 ...(Fevrier 2017)
 Go 1.7 ... (Aout 2016)
